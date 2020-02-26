@@ -9,15 +9,18 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import dev.josh.taylor.sharpreads.R
 import kotlinx.android.synthetic.main.fragment_book.*
 import javax.inject.Inject
 
 private const val ARG_BOOK_ID = "bookId"
 
-class BookFragment @Inject constructor() : Fragment() {
+class BookFragment @Inject constructor(
+    private val viewModelFactory: ViewModelProvider.Factory
+) : Fragment() {
 
-    private val viewModel: BookViewModel by activityViewModels()
+    private val viewModel: BookViewModel by activityViewModels { viewModelFactory }
 
     private val bookPosition: Int
         get() {

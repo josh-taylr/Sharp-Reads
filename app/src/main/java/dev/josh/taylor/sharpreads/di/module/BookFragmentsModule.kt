@@ -13,7 +13,7 @@ import dev.josh.taylor.sharpreads.ui.main.BookListFragment
 import dev.josh.taylor.sharpreads.ui.main.InjectingFragmentFactory
 
 @Module(includes = [Declarations::class])
-class MainModule
+class BookFragmentsModule
 
 @Module
 private interface Declarations {

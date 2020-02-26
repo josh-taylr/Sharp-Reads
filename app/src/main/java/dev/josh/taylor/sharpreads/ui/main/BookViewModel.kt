@@ -6,15 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import dev.josh.taylor.goodreadsapi.Book
 import dev.josh.taylor.goodreadsapi.GoodReadsService
-import dev.josh.taylor.sharpreads.BuildConfig
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class BookViewModel : ViewModel() {
-
-    // TODO create an injecting view-model factory so VMs can have injected constructors
-    private val goodReadsService: GoodReadsService = GoodReadsService(
-        BuildConfig.GoodReadsKey
-    )
+class BookViewModel @Inject constructor(
+    private val goodReadsService: GoodReadsService
+) : ViewModel() {
 
     private val _books = liveData(Dispatchers.IO) {
         val search = goodReadsService.search("Bill Bryson")
