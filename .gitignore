@@ -1,3 +1,6 @@
+# project specific exclusions
+goodreads.properties
+
 # Built application files
 *.apk
 *.aar

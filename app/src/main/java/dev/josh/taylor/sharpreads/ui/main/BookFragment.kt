@@ -11,10 +11,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import dev.josh.taylor.sharpreads.R
 import kotlinx.android.synthetic.main.fragment_book.*
+import javax.inject.Inject
 
 private const val ARG_BOOK_ID = "bookId"
 
-class BookFragment : Fragment() {
+class BookFragment @Inject constructor() : Fragment() {
 
     private val viewModel: BookViewModel by activityViewModels()
 
@@ -37,7 +38,7 @@ class BookFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.setBook(bookPosition)
-        viewModel.bookTitle.observe(viewLifecycleOwner, Observer { bookTitle.text = it })
+        viewModel.book.observe(viewLifecycleOwner, Observer { bookTitle.text = it.title })
     }
 
     override fun onResume() {
@@ -56,8 +57,6 @@ class BookFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(bookId: Int) = BookFragment().apply {
-            arguments = bundleOf(ARG_BOOK_ID to bookId)
-        }
+        fun createBundle(bookId: Int) = bundleOf(ARG_BOOK_ID to bookId)
     }
 }

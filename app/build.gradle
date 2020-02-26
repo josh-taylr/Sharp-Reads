@@ -1,6 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+def goodReadsPropertiesFile = rootProject.file("goodreads.properties")
+def goodReadsProperties = new Properties()
+goodReadsProperties.load(new FileInputStream(goodReadsPropertiesFile))
 
 android {
     compileSdkVersion 29
@@ -14,6 +19,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "GoodReadsKey", goodReadsProperties["key"])
     }
 
     buildTypes {
@@ -32,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':goodreadsapi')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -50,4 +57,8 @@ dependencies {
     androidTestImplementation "androidx.test:core-ktx:${testVersion}"
     androidTestImplementation "androidx.test:rules:${testVersion}"
     implementation "androidx.recyclerview:recyclerview:${recyclerviewVersion}"
+    implementation "com.google.dagger:dagger:${daggerVersion}"
+    kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
+    implementation 'com.squareup.okhttp3:okhttp:3.14.6'
 }

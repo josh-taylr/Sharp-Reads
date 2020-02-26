@@ -5,6 +5,8 @@ ext {
     lifecycleVersion = '2.2.0'
     recyclerviewVersion = '1.1.0'
     espressoVersion = '3.2.0'
+    daggerVersion = '2.26'
+    retrofitVersion = '2.7.1'
 }
 
 buildscript {

@@ -2,41 +2,40 @@ package dev.josh.taylor.sharpreads.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import dev.josh.taylor.goodreadsapi.Book
+import dev.josh.taylor.goodreadsapi.GoodReadsService
+import dev.josh.taylor.sharpreads.BuildConfig
+import kotlinx.coroutines.Dispatchers
 
 class BookViewModel : ViewModel() {
 
-    private val data = listOf(
-        "Brave New World",
-        "Sapiens: A Brief History of Human Kind",
-        "Hooked: How to Build Habit-Forming Products",
-        "Thus Spoke Zarathustra",
-        "Beyond Good and Evil",
-        "Capitalism Without Capital",
-        "The Windup Bird Chronicles",
-        "The Happiness Hypothesis",
-        "The Road",
-        "Do Androids Dream of Electric Sheep",
-        "Fooled By Randomness"
+    // TODO create an injecting view-model factory so VMs can have injected constructors
+    private val goodReadsService: GoodReadsService = GoodReadsService(
+        BuildConfig.GoodReadsKey
     )
 
-    private val _books = MutableLiveData(data)
-    val books: LiveData<List<String>> = _books
+    private val _books = liveData(Dispatchers.IO) {
+        val search = goodReadsService.search("Bill Bryson")
+        emit(search.results.map { it.book })
+    }
+    val books: LiveData<List<Book>> = _books
 
     private val _isLoading = MediatorLiveData<Boolean>().apply {
         addSource(books) { value = it == null }
     }
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _bookTitle = MediatorLiveData<String>()
-    val bookTitle: LiveData<String> = _bookTitle
+    private val _book = MediatorLiveData<Book>()
+    val book: LiveData<Book> = _book
 
-    fun setBook(position: Int?) {
-        _bookTitle.value = position?.let { data[it] }
+    fun setBook(position: Int) {
+        val bookList = checkNotNull(books.value) { "setBook(Int) called when books == null." }
+        _book.value = bookList[position]
     }
 
     fun closeBook() {
-        _bookTitle.value = null
+        _book.value = null
     }
 }

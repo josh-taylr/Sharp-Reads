@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import dev.josh.taylor.goodreadsapi.Book
 import dev.josh.taylor.sharpreads.MainActivity
 import dev.josh.taylor.sharpreads.R
 import kotlinx.android.synthetic.main.book_list_fragment.*
+import javax.inject.Inject
 
-class BookListFragment : Fragment() {
+class BookListFragment @Inject constructor() : Fragment() {
 
     private val viewModel: BookViewModel by activityViewModels()
 
@@ -38,13 +40,9 @@ class BookListFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner, Observer { progressBar.isVisible = it })
         viewModel.books.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
     }
-
-    companion object {
-        fun newInstance() = BookListFragment()
-    }
 }
 
-private class BookListAdapter : ListAdapter<String, BookViewHolder>(BookDiffUtil) {
+private class BookListAdapter : ListAdapter<Book, BookViewHolder>(BookDiffUtil) {
 
     var onClick: (position: Int) -> Unit = {}
 
@@ -56,17 +54,17 @@ private class BookListAdapter : ListAdapter<String, BookViewHolder>(BookDiffUtil
     }
 }
 
-private object BookDiffUtil : DiffUtil.ItemCallback<String>() {
-    override fun areItemsTheSame(oldItem: String, newItem: String): Boolean = oldItem == newItem
-    override fun areContentsTheSame(oldItem: String, newItem: String): Boolean = oldItem == newItem
+private object BookDiffUtil : DiffUtil.ItemCallback<Book>() {
+    override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean = oldItem == newItem
+    override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean = oldItem == newItem
 }
 
 private class BookViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val title = itemView.findViewById<AppCompatTextView>(android.R.id.text1)
 
-    fun bind(bookTitle: String, onClick: (position: Int) -> Unit) {
-        title.text = bookTitle
+    fun bind(book: Book, onClick: (position: Int) -> Unit) {
+        title.text = book.title
         itemView.setOnClickListener { onClick(adapterPosition) }
     }
 
