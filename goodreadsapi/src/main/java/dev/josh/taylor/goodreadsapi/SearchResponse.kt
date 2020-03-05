@@ -13,6 +13,16 @@ internal class SearchResponse {
 
 class Search {
 
+    @Suppress("unused")
+    internal constructor()
+
+    constructor(start: Int, end: Int, totalCount: Int, results: MutableList<Work>) {
+        this.start = start
+        this.end = end
+        this.totalCount = totalCount
+        this.results = results
+    }
+
     @field:Element(name = "results-start", required = false)
     var start: Int = 0
         internal set
@@ -32,6 +42,14 @@ class Search {
 
 class Work {
 
+    @Suppress("unused")
+    internal constructor()
+
+    constructor(id: Int, book: Book) {
+        this.id = id
+        this.book = book
+    }
+
     @field:Element(required = false)
     var id: Int = -1
         internal set
@@ -42,6 +60,14 @@ class Work {
 }
 
 class Book {
+
+    @Suppress("unused")
+    internal constructor()
+
+    constructor(id: Int, title: String) {
+        this.id = id
+        this.title = title
+    }
 
     @field:Element(required = false)
     var id: Int = -1
