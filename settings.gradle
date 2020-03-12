@@ -1,3 +1,4 @@
 rootProject.name='SharpReads'
 include ':app'
+include ':architecture'
 include ':goodreadsapi'

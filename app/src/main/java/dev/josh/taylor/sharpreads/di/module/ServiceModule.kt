@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dev.josh.taylor.goodreadsapi.GoodReadsService
 import dev.josh.taylor.sharpreads.BuildConfig
-import dev.josh.taylor.sharpreads.di.ActivityScope
+import dev.josh.taylor.sharpreads.architecture.di.ActivityScope
 
 @Module
 class ServiceModule {

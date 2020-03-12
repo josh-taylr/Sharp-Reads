@@ -5,12 +5,12 @@ import androidx.fragment.app.FragmentFactory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import dev.josh.taylor.sharpreads.di.ActivityScope
-import dev.josh.taylor.sharpreads.di.FragmentKey
+import dev.josh.taylor.sharpreads.architecture.di.ActivityScope
+import dev.josh.taylor.sharpreads.architecture.di.FragmentKey
+import dev.josh.taylor.sharpreads.architecture.di.InjectingFragmentFactory
 import dev.josh.taylor.sharpreads.ui.auth.SignInFragment
 import dev.josh.taylor.sharpreads.ui.main.BookFragment
 import dev.josh.taylor.sharpreads.ui.main.BookListFragment
-import dev.josh.taylor.sharpreads.ui.main.InjectingFragmentFactory
 
 @Module(includes = [Declarations::class])
 class BookFragmentsModule

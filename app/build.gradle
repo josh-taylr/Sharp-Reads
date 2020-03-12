@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':architecture')
     implementation project(path: ':goodreadsapi')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -57,7 +58,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.14.6'
 
     androidTestImplementation('junit:junit:4.13') {
-        because("Using testImplementation creates clathpath issue in the IDE.")
+        because("Using androidTestImplementation creates clathpath issue in the IDE.")
     }
     testImplementation "androidx.test:core-ktx:${testVersion}"
     testImplementation 'org.mockito:mockito-core:2.28.2'

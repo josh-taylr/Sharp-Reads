@@ -1,4 +1,4 @@
-package dev.josh.taylor.sharpreads.di
+package dev.josh.taylor.sharpreads.architecture.di
 
 import javax.inject.Scope
 

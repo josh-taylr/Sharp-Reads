@@ -1,4 +1,4 @@
-package dev.josh.taylor.sharpreads.ui.main
+package dev.josh.taylor.sharpreads.architecture.di
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
