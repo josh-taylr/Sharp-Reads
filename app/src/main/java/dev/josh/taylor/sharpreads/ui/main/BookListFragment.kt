@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.josh.taylor.goodreadsapi.Book
-import dev.josh.taylor.sharpreads.MainActivity
 import dev.josh.taylor.sharpreads.R
 import kotlinx.android.synthetic.main.book_list_fragment.*
 import javax.inject.Inject
@@ -35,7 +34,7 @@ class BookListFragment @Inject constructor(
         super.onActivityCreated(savedInstanceState)
 
         val adapter = BookListAdapter()
-        adapter.onClick = { (requireActivity() as MainActivity).showBook(it) }
+        adapter.onClick = { position -> viewModel.bookItemClicked(position) }
 
         bookList.layoutManager = LinearLayoutManager(requireContext())
         bookList.adapter = adapter

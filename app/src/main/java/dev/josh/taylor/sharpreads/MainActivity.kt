@@ -3,15 +3,19 @@ package dev.josh.taylor.sharpreads
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import dev.josh.taylor.sharpreads.di.component.MainComponent
 import dev.josh.taylor.sharpreads.ui.auth.SignInFragment
 import dev.josh.taylor.sharpreads.ui.main.BookFragment
 import dev.josh.taylor.sharpreads.ui.main.BookListFragment
+import dev.josh.taylor.sharpreads.ui.main.BookViewModel
 import kotlinx.android.synthetic.main.main_activity.*
 import javax.inject.Inject
 
@@ -19,6 +23,11 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var fragmentFactory: FragmentFactory
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: BookViewModel by viewModels { viewModelFactory }
 
     private lateinit var mainComponent: MainComponent
 
@@ -36,9 +45,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         setSupportActionBar(toolbar)
 
+        viewModel.navigateToBook.observe(this, Observer { event ->
+            event.getContentOrNull()?.let { book ->
+                showBook(book.id)
+            }
+        })
+
         if (savedInstanceState == null) {
             supportFragmentManager.commitNow {
-                replace(R.id.container, BookListFragment::class.java, bundleOf(),"BookList")
+                replace(R.id.container, BookListFragment::class.java, bundleOf(), "BookList")
             }
         }
     }
