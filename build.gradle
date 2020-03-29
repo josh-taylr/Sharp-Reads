@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 ext {
-    fragmentVersion = '1.2.1'
+    fragmentVersion = '1.2.3'
     testVersion = '1.2.0'
     lifecycleVersion = '2.2.0'
     recyclerviewVersion = '1.1.0'

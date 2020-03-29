@@ -4,14 +4,16 @@ import androidx.lifecycle.*
 import dev.josh.taylor.goodreadsapi.Book
 import dev.josh.taylor.goodreadsapi.GoodReadsService
 import dev.josh.taylor.sharpreads.architecture.Event
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class BookViewModel @Inject constructor(
-    private val goodReadsService: GoodReadsService
+    private val goodReadsService: GoodReadsService,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
-    private val _books = liveData(Dispatchers.IO) {
+    private val _books = liveData(ioDispatcher) {
         val search = goodReadsService.search("Bill Bryson")
         emit(search.results.map { it.book })
     }
