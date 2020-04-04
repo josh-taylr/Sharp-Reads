@@ -11,6 +11,7 @@ import dev.josh.taylor.sharpreads.architecture.di.InjectingFragmentFactory
 import dev.josh.taylor.sharpreads.ui.auth.SignInFragment
 import dev.josh.taylor.sharpreads.ui.main.BookFragment
 import dev.josh.taylor.sharpreads.ui.main.BookListFragment
+import dev.josh.taylor.sharpreads.ui.main.EmptyBookListFragment
 
 @Module(includes = [Declarations::class])
 class BookFragmentsModule
@@ -32,6 +33,11 @@ private interface Declarations {
     @IntoMap
     @FragmentKey(SignInFragment::class)
     fun bindSignInFragment(signInFragment: SignInFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(EmptyBookListFragment::class)
+    fun bindEmptyBookListFragment(emptyBookListFragment: EmptyBookListFragment): Fragment
 
     @Binds
     @ActivityScope

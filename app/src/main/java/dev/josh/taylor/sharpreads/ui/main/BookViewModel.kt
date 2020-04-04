@@ -7,6 +7,7 @@ import dev.josh.taylor.sharpreads.architecture.Event
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
+import javax.net.ssl.SSLHandshakeException
 
 class BookViewModel @Inject constructor(
     private val goodReadsService: GoodReadsService,
@@ -14,10 +15,18 @@ class BookViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _books = liveData(ioDispatcher) {
-        val search = goodReadsService.search("Bill Bryson")
-        emit(search.results.map { it.book })
+        try {
+            val search = goodReadsService.search("Bill Bryson")
+            emit(search.results.map { it.book })
+            _booksError.postValue(false)
+        } catch (e: SSLHandshakeException) {
+            _booksError.postValue(true)
+        }
     }
     val books: LiveData<List<Book>> = _books
+
+    private val _booksError = MutableLiveData<Boolean>()
+    val booksError: LiveData<Boolean> = _booksError
 
     private val _isLoading = MediatorLiveData<Boolean>().apply {
         addSource(books) { value = it == null }

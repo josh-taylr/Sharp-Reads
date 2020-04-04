@@ -5,4 +5,6 @@
     <string name="sign_in_message">Sign in</string>
     <string name="book_title_desc">Book title</string>
     <string name="main_menu_account">Account</string>
+    <string name="emptyListMessage">Unable to load books</string>
+    <string name="emptyListMessageDesc">Empty list book message</string>
 </resources>

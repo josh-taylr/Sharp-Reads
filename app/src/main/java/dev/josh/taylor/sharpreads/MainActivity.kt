@@ -16,6 +16,7 @@ import dev.josh.taylor.sharpreads.ui.auth.SignInFragment
 import dev.josh.taylor.sharpreads.ui.main.BookFragment
 import dev.josh.taylor.sharpreads.ui.main.BookListFragment
 import dev.josh.taylor.sharpreads.ui.main.BookViewModel
+import dev.josh.taylor.sharpreads.ui.main.EmptyBookListFragment
 import kotlinx.android.synthetic.main.main_activity.*
 import javax.inject.Inject
 
@@ -51,6 +52,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.booksError.observe(this, Observer { showError ->
+            if (showError) showEmptyListFragment()
+        })
+
         if (savedInstanceState == null) {
             supportFragmentManager.commitNow {
                 replace(R.id.container, BookListFragment::class.java, bundleOf(), "BookList")
@@ -81,6 +86,13 @@ class MainActivity : AppCompatActivity() {
                 BookFragment.createBundle(bookId),
                 "BookDetail"
             )
+        }
+    }
+
+    fun showEmptyListFragment() {
+        supportFragmentManager.commit {
+            setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+            replace(R.id.container, EmptyBookListFragment::class.java, bundleOf(), null)
         }
     }
 
